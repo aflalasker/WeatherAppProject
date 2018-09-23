@@ -1,40 +1,35 @@
 {% extends 'weather/base.html' %}
+{% load static %}
+
+    {% block styles %}
+        <link rel="stylesheet" href="{% static 'weather/css/weather.css' %}">
+    {% endblock styles %}
 
     {% block title %} Weather {% endblock title %}
 
     {% block body %}
-  <div class="container">
+  <div class="text-center">
       <form method="POST">
           {% csrf_token %}
-
-              <div class="">
                   {{ form.name }}
-              </div>
-              <div class="control">
                   <button type="submit" class="button is-info">
                       Add City
                   </button>
-              </div>
       </form>
   </div>
-<div class="container">
-                    {% for city_weather in weather_data %}
-                      <div class="media-left">
-                            <figure class="image is-50x50">
-                                <img src="http://openweathermap.org/img/w/{{ city_weather.icon }}.png" alt="Image">
-                            </figure>
-                        </div>
-                        <div class="media-content">
-                            <div class="content">
-                                <p>
-                                    <span class="title">{{ city_weather.city }}</span>
-                                    <br>
-                                    <span class="subtitle">{{ city_weather.temperature }}° F</span>
-                                    <br> {{ city_weather.description }}
-                                </p>
-                            </div>
-                        </div>
-                    {% endfor %}
-    </div>
+
+{% for city_weather in weather_data %}
+
+      <div class="card text-center col-lg-1 col-sm-12 col-md-12">
+        <img class="card-img-top" src="http://openweathermap.org/img/w/{{ city_weather.icon }}.png" alt="Card image cap">
+        <div class="card-body">
+            <h3 class="card-title">{{ city_weather.temperature }}°</h3>
+            <h5 class="card-title">{{ city_weather.city }}</h5><br>
+            <p class="card-text">{{ city_weather.description }}</p>
+        </div>
+      </div>
+
+
+{% endfor %}
 {% endblock body %}
 </html>

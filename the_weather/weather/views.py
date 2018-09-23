@@ -5,7 +5,7 @@ from .forms import CityForm
 
 
 def index(request):
-    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=7be998e8dc4474258b82f0568d119b81'
+    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=7be998e8dc4474258b82f0568d119b81'
 
     if request.method == 'POST':
         form = CityForm(request.POST)
@@ -22,13 +22,13 @@ def index(request):
         r = requests.get(url.format(city)).json()
 
         city_weather = {
-            'city' : city.name,
-            'temperature' : r['main']['temp'],
-            'description' : r['weather'][0]['description'],
-            'icon' : r['weather'][0]['icon'],
+            'city': city.name,
+            'temperature': r['main']['temp'],
+            'description': r['weather'][0]['description'],
+            'icon': r['weather'][0]['icon'],
         }
 
         weather_data.append(city_weather)
 
-    context = {'weather_data' : weather_data, 'form': form}
+    context = {'weather_data': weather_data, 'form': form}
     return render(request, 'weather/weather.html', context)
